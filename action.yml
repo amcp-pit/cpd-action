@@ -1,0 +1,26 @@
+name: CPD
+description: Copy/Paste Detection.
+author: AMCP
+inputs:
+  repository:
+    description: Name of github classroom repository.
+    required: true
+    default: ""
+  collection:
+    description: Name of collection. 
+    required: true
+    default: "amcp-pit"
+outputs:
+  checks-failed:
+    description: An integer that can be used as a boolean value to indicate if all checks failed.
+    value: ${{ steps.cpd.outputs.checks-failed }}
+runs:
+  using: "composite"
+  steps:
+    - name: Run cpd
+      id: cpd
+      shell: bash
+      run: |
+        # Check
+        $GITHUB_ACTION_PATH/runchecks.sh ${{ inputs.repository }} ${{ inputs.collection }} 
+
